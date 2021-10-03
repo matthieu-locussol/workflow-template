@@ -69,6 +69,22 @@ jobs:
             - run: yarn install
             - run: yarn tests:integration:ci
 
+    staging:
+        name: Staging
+        runs-on: ubuntu-latest
+        needs: [unit_tests, integration_tests]
+        if: github.ref == 'refs/heads/staging'
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+                  cache: yarn
+            - run: yarn install
+            - run: yarn build
+            # Some code to upload the build on the staging server
+            - run: echo "Sent to staging!"
+
     production:
         name: Production
         runs-on: ubuntu-latest
@@ -82,3 +98,5 @@ jobs:
                   cache: yarn
             - run: yarn install
             - run: yarn build
+            # Some code to upload the build on the production server
+            - run: echo "Sent to production!"
