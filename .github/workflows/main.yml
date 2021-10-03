@@ -3,6 +3,7 @@ name: Main
 on:
     push:
         branches:
+            - staging
             - master
     pull_request:
 
