@@ -1,0 +1,84 @@
+name: Main
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+
+jobs:
+    prettier:
+        name: Check prettier
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+                  cache: yarn
+            - run: yarn install
+            - run: yarn check:prettier
+
+    typescript:
+        name: Check typescript
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+                  cache: yarn
+            - run: yarn install
+            - run: yarn check:typescript
+
+    eslint:
+        name: Check eslint
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+                  cache: yarn
+            - run: yarn install
+            - run: yarn check:eslint
+
+    unit_tests:
+        name: Unit tests
+        runs-on: ubuntu-latest
+        needs: [prettier, typescript, eslint]
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+                  cache: yarn
+            - run: yarn install
+            - run: yarn tests:unit:ci
+
+    integration_tests:
+        name: Integration tests
+        runs-on: ubuntu-latest
+        needs: [prettier, typescript, eslint]
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+                  cache: yarn
+            - run: yarn install
+            - run: yarn tests:integration:ci
+
+    production:
+        name: Production
+        runs-on: ubuntu-latest
+        needs: [unit_tests, integration_tests]
+        if: github.ref == 'refs/heads/master'
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+                  cache: yarn
+            - run: yarn install
+            - run: yarn build

@@ -1,0 +1,19 @@
+{
+    "name": "workflow-template",
+    "version": "1.0.0",
+    "description": "GitHub Action workflow template",
+    "repository": "git@github.com:matthieu-locussol/workflow-template.git",
+    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "install": "echo \"Install done!\"",
+        "build": "echo \"Build done!\"",
+        "check:prettier": "echo \"Prettier done!\"",
+        "check:typescript": "echo \"TypeScript done!\"",
+        "check:eslint": "echo \"ESLint done!\"",
+        "tests:unit": "echo \"Unit tests done!\"",
+        "tests:unit:ci": "echo \"Unit tests (CI) done!\"",
+        "tests:integration": "echo \"Integration tests done!\"",
+        "tests:integration:ci": "echo \"Integration tests (CI) done!\""
+    }
+}
